@@ -1,0 +1,24 @@
+version: '3'
+services:
+  kaggle:
+    restart: always
+    image: dev-llm:v141
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - ../../dev-llm:/kaggle/dev-llm
+    container_name: LLM 
+    tty: true
+    ports: 
+      - '8888:8888'
+    command: jupyter-lab --ip 0.0.0.0 --port=8888 --allow-root --no-browser --NotebookApp.token=''
+    working_dir: /kaggle
+    shm_size: '256gb'
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 4
+              capabilities: [gpu]
