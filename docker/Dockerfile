@@ -14,24 +14,28 @@ RUN pip install japanize-matplotlib mlflow logzero timm pandarallel optuna gdown
 RUN pip install pandas==1.5.2 keplergl==0.3.2 mkl fancyimpute
 RUN cp /opt/conda/pkgs/mkl-2023.1.0-h213fc3f_46344/lib/libmk* /usr/local/cuda/lib64
 
-# RUN pip install polars==0.15.16
 
 RUN pip install black isort
 RUN pip install jupyter_contrib_nbextensions jupyterlab_code_formatter
 RUN pip install wandb openai
 
 # torchのバージョンが古いのでアップデート
-RUN pip install torch==2.0.1 torchvision==0.15.2 torchaudio==2.0.2
+# RUN pip install torch==2.0.1 torchvision==0.15.2 torchaudio==2.0.2
+RUN pip install torch==2.1.2 torchvision==0.16.2 torchaudio==2.1.2 --index-url https://download.pytorch.org/whl/cu118
 
 # パラメータ管理用
 RUN pip install omegaconf
 
-# デフォルトではエラーが起きてうまくいかなかったもの
+# デフォルトではエラーで動かなかったためバージョン変更
 RUN pip install datasets==2.14.7
 
 # DeepSpeed
-RUN apt update -y && apt install -y \
-    libopenmpi-dev\
+# RUN apt update -y && apt install -y \
+#     libopenmpi-dev\
+#     && apt-get clean \
+#     && rm -rf /var/lib/apt/lists/*
+RUN apt-get update --allow-releaseinfo-change -y && apt-get install -y \
+    libopenmpi-dev \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 RUN pip install mpi4py
