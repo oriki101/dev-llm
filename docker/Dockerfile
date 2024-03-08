@@ -30,10 +30,6 @@ RUN pip install omegaconf
 RUN pip install datasets==2.14.7
 
 # DeepSpeed
-# RUN apt update -y && apt install -y \
-#     libopenmpi-dev\
-#     && apt-get clean \
-#     && rm -rf /var/lib/apt/lists/*
 RUN apt-get update --allow-releaseinfo-change -y && apt-get install -y \
     libopenmpi-dev \
     && apt-get clean \
